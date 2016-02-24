@@ -12,6 +12,42 @@ from matplotlib.pyplot import *
    Date:  2015-12-16
 """
 
+# Simple Moving Average
+def sma(daily_data, time_frame):
+	"""Calculates the X-day simple moving average, based on:
+	   evolving sum(a[:time_frame]) / time_frame
+
+	   Args:
+	      daily_data: 2D array with [open, high, low, close, volume] per row
+	      time_frame: number of days sma average is based on, usually 12, 26, or 9
+	   Returns:
+	      1D array with [sma] values
+	"""
+	smas = np.array([])
+	daily_closes = np.array([])
+	for i, data in enumerate(daily_data):
+		"""Just the daily closes (data[3] element) in array"""
+		daily_close = data[3]
+		daily_closes = np.append(daily_closes, daily_close)
+	
+	for i, element in enumerate(daily_data):
+    	if i+1 >= len(daily_data):
+        	break
+    	else:
+        	inter_element = (element + daily_data[i+1])
+        	interated_elements = np.append(interated_elements, inter_element)
+
+    # Above is example loop which bottom loop needs to do
+	for i, element in enumerate(daily_closes):
+		if (i + time_frame) >= len(daily_closes):
+			break
+		else:
+			# need sub for loop for summing?!
+			sma = (element + daily_closes[i+1] + daily_closes[i+2]...)
+			smas = np.append(smas, sma)
+
+	return smas
+
 # Exponential Moving Average
 def ema(daily_data, time_frame):
 	"""Calculates the X-day exponential moving average, based on:
@@ -30,7 +66,7 @@ def ema(daily_data, time_frame):
 	for i, data in enumerate(daily_data):
 		"""Just the daily closes (data[3] element) in array"""
 		daily_close = data[3]
-		daily_closes = np.append(daily_close)
+		daily_closes = np.append(daily_closes, daily_close)
 
 	# Multiplier can also be set as a constant decimal percentage (0.18 = 18%)
 	multiplier = 2. / (time_frame + 1)
