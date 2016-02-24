@@ -12,6 +12,29 @@ from matplotlib.pyplot import *
    Date:  2015-12-16
 """
 
+# Exponential Moving Average
+def ema(daily_data, time_frame):
+	"""Calculates the X-day exponential moving average, based on:
+	   inital X-day sma * multiplier= inital ema
+	   (close - ema(previous_close)) * multiplier + ema(previous_close)
+
+	   Args:
+	      daily_data: 2D array with [open, high, low, close, volume] per row
+	      time_frame: number of days ema average is based on, usually 12, 26 or 9
+	   Returns:
+	      1D array with [ema] values
+	"""
+	inital_sma = np.array([])
+	emas = np.array([])
+	daily_closes = np.array([])
+	for i, data in enumerate(daily_data):
+		"""Just the daily closes (data[3] element) in array"""
+		daily_close = data[3]
+		daily_closes = np.append(daily_close)
+
+	# Multiplier can also be set as a constant decimal percentage (0.18 = 18%)
+	multiplier = 2. / (time_frame + 1)
+
 # Daily Money Flow Multiplier (MFM)
 def mfm(daily_data):
 	"""Finds daily money flow multiplier (MFM), represented by:
@@ -232,3 +255,4 @@ show()
 # TODO: Blessings terminal based version
 # is it possible to do graphs in terminal with blessings?!
 # maybe use termgraph.py by mkaz?
+# Add MACD (moving average convergence/divergence oscillator) plot with stock prices
