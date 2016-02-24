@@ -197,6 +197,8 @@ show()
 adl_lingress_slope, adl_lingress_intercept, adl_lingress_rvalue, adl_lingress_pvalue, adl_lingress_stderr = st.lingress(daily_adls, ys_adls)
 print("ADL r^2: ", adl_lingress_rvalue**2.)
 
+
+"""
 # Exponential distribution section
 time_range = 250.
 exp_function = exponential_dist(data, time_range)
@@ -225,6 +227,7 @@ ax2.set_ylabel('Exponential Probability', color='g')
 for tl in ax2.get_yticklabels():
 	tl.set_color('g')
 show()
+"""
 
 # TODO: Blessings terminal based version
 # is it possible to do graphs in terminal with blessings?!
