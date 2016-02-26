@@ -29,22 +29,14 @@ def sma(daily_data, time_frame):
 		"""Just the daily closes (data[3] element) in array"""
 		daily_close = data[3]
 		daily_closes = np.append(daily_closes, daily_close)
-	
-	for i, element in enumerate(daily_data):
-    	if i+1 >= len(daily_data):
-        	break
-    	else:
-        	inter_element = (element + daily_data[i+1])
-        	interated_elements = np.append(interated_elements, inter_element)
 
-    # Above is example loop which bottom loop needs to do
 	for i, element in enumerate(daily_closes):
 		if (i + time_frame) >= len(daily_closes):
 			break
 		else:
-			# need sub for loop for summing?!
-			sma = (element + daily_closes[i+1] + daily_closes[i+2]...)
-			smas = np.append(smas, sma)
+			# sma = sum(time_frame packet) / time_frame 
+			sma_element = (sum(daily_closes[i:time_frame+i]) / time_frame)
+			smas = np.append(smas, summer)
 
 	return smas
 
