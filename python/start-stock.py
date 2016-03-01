@@ -12,7 +12,7 @@ from matplotlib.pyplot import *
    Date:  2015-12-16
 """
 
-# Simple Moving Average
+# Simple moving Average
 def sma(daily_data, time_frame):
 	"""Calculates the X-day simple moving average, based on:
 	   evolving sum(a[:time_frame]) / time_frame
@@ -36,7 +36,7 @@ def sma(daily_data, time_frame):
 		else:
 			# sma = sum(time_frame packet) / time_frame 
 			sma_element = (sum(daily_closes[i:time_frame+i]) / time_frame)
-			smas = np.append(smas, summer)
+			smas = np.append(smas, sma_element)
 
 	return smas
 
@@ -52,8 +52,6 @@ def ema(daily_data, time_frame):
 	   Returns:
 	      1D array with [ema] values
 	"""
-	inital_sma = np.array([])
-	emas = np.array([])
 	daily_closes = np.array([])
 	for i, data in enumerate(daily_data):
 		"""Just the daily closes (data[3] element) in array"""
@@ -61,7 +59,18 @@ def ema(daily_data, time_frame):
 		daily_closes = np.append(daily_closes, daily_close)
 
 	# Multiplier can also be set as a constant decimal percentage (0.18 = 18%)
-	multiplier = 2. / (time_frame + 1)
+	multiplier = 2. / (time_frame + 1.)
+	# The inital ema is based on the first sma: close - inital_sma * multiplier + inital_sma
+	smas = sma(daily_data, time_frame)
+	emas = np.array([daily_closes[0] - smas[0] * multiplier + smas[0]])
+	for i, element in enumerate(daily_closes):
+		# ema = close - previous_ema * multiplier + previous_ema
+		ema_element = element - emas[i] * multiplier + emas[i]
+		emas = np.append(emas, ema_element)
+
+	# Remove first ema, for plotting purposes (I think we need this)
+	emas = emas[1:]
+	return emas
 
 # Daily Money Flow Multiplier (MFM)
 def mfm(daily_data):
