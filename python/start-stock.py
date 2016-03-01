@@ -293,3 +293,4 @@ show()
 # is it possible to do graphs in terminal with blessings?!
 # maybe use termgraph.py by mkaz?
 # Add MACD (moving average convergence/divergence oscillator) plot with stock prices
+# Add plotting helper function maybe
