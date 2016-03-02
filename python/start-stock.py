@@ -182,7 +182,8 @@ adls_x = np.arange(0, len(daily_adls))
 # print(adls_x)
 
 # EMA
-stock_emas = ema(data, 10)
+ema_12_day = ema(data, 12)
+ema_26_day = ema(data, 26)
 
 # Plot stock price
 # Polynomial fit
