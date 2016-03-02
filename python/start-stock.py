@@ -70,7 +70,7 @@ def ema(daily_data, time_frame):
 		emas = np.append(emas, ema_element)
 
 	# Remove first ema, for plotting purposes (I think we need this)
-	# emas = emas[1:]
+	emas = emas[1:]
 	return emas
 
 # Daily Money Flow Multiplier (MFM)
@@ -234,7 +234,7 @@ print(coefficients_adl)
 print(polynomial_adl)
 
 # Overlay stock price graph with ADL graph
-# Plot stock price with poly fit
+# First plot stock price with poly fit
 fig, ax1 = subplots()
 ax1.plot(data_x, data[:,3], 'b-')
 # ax1.plot(data_x, ys_data, 'b-') # Poly fit
@@ -244,7 +244,7 @@ ax1.set_ylabel('Stock Price (USD)', color='b')
 for tl in ax1.get_yticklabels():
 	tl.set_color('b')
 
-# Plot ADL with poly fit
+# Second plot ADL with poly fit
 ax2 = ax1.twinx()
 ax2.plot(data_x, daily_adls, 'g-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'g-') # Note x axis is the same (poly fit)
@@ -252,6 +252,27 @@ ax2.set_ylabel('Accumulation Distribution Line (ADL)', color='g')
 # Set y axis tick labels to proper graph color
 for tl in ax2.get_yticklabels():
 	tl.set_color('g')
+show()
+
+stock_emas = ema(data, 10)
+
+# Plotting Stock price with EMA overlay
+fig, ax1 = subplots()
+# ax1.plot(data_x, data[:,3], 'b-')
+ax1.plot(data_x, ys_data, 'b-') # Poly fit
+ax1.set_xlabel('Days')
+ax1.set_ylabel('Stock Price (USD)', color='b')
+# Set y axis tick labels to proper graph color
+for tl in ax1.get_yticklabels():
+	tl.set_color('b')
+
+ax2 = ax1.twinx()
+ax2.plot(data_x, stock_emas, 'r-') # Note x axis is the same
+# ax2.plot(data_x, ys_adls, 'r-') # Note x axis is the same (poly fit)
+ax2.set_ylabel('Exponential Moving Average (EMA)', color='r')
+# Set y axis tick labels to proper graph color
+for tl in ax2.get_yticklabels():
+	tl.set_color('r')
 show()
 
 # r-squared of ADL and poly fit of ADL
