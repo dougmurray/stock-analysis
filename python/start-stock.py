@@ -157,11 +157,6 @@ data = np.delete(data, 0 , 1)
 data = np.flipud(data)
 print(data)
 
-# Just the Closes in array form
-daily_closes = data[:,3]
-print(daily_closes)
-print(data)
-
 # Daily MFM
 daily_mfms = mfm(data)
 print(daily_mfms)
@@ -181,6 +176,7 @@ adls_x = np.arange(0, len(daily_adls))
 # print(adls_x)
 
 # EMA
+daily_closes = data[:,3]
 ema_12_day = ema(daily_closes, 12)
 ema_26_day = ema(daily_closes, 26)
 
