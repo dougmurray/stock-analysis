@@ -163,6 +163,27 @@ data = np.delete(data, 0 , 1)
 data = np.flipud(data)
 print(data)
 
+# Daily MFM
+daily_mfms = mfm(data)
+print(daily_mfms)
+mfms_x = np.arange(0, len(daily_mfms))
+# print(mfms_x)
+
+# Daily MFV
+daily_mfvs = mfv(daily_mfms, data)
+print(daily_mfvs)
+mfvs_x = np.arange(0, len(daily_mfvs))
+# print(mfvs_x)
+
+# ADL
+daily_adls = adl(daily_mfvs)
+print(daily_adls)
+adls_x = np.arange(0, len(daily_adls))
+# print(adls_x)
+
+# EMA
+stock_emas = ema(data, 10)
+
 # Plot stock price
 # Polynomial fit
 data_x = np.arange(0, data.shape[0])
@@ -177,13 +198,6 @@ show()
 print(coefficients_data)
 print(polynomial_data)
 
-# Daily MFM
-daily_mfms = mfm(data)
-print(daily_mfms)
-
-mfms_x = np.arange(0, len(daily_mfms))
-# print(mfms_x)
-
 # Plot graph of daily MFMs
 plot(mfms_x, daily_mfms, 'o')
 # plot(x, ys)
@@ -192,13 +206,6 @@ xlabel('Days')
 # xlim(-10, 10)
 ylim(-1.25, 1.25)
 show()
-
-# Daily MFV
-daily_mfvs = mfv(daily_mfms, data)
-print(daily_mfvs)
-
-mfvs_x = np.arange(0, len(daily_mfvs))
-# print(mfvs_x)
 
 # Plot graph of daily MFVs
 # Polynomial fit
@@ -212,13 +219,6 @@ xlabel('Days')
 show()
 print(coefficients_mfv)
 print(polynomial_mfv)
-
-# ADL
-daily_adls = adl(daily_mfvs)
-print(daily_adls)
-
-adls_x = np.arange(0, len(daily_adls))
-# print(adls_x)
 
 # Plot graph of daily ADLs
 # Polynomial fit
@@ -253,8 +253,6 @@ ax2.set_ylabel('Accumulation Distribution Line (ADL)', color='g')
 for tl in ax2.get_yticklabels():
 	tl.set_color('g')
 show()
-
-stock_emas = ema(data, 10)
 
 # Plotting Stock price with EMA overlay
 fig, ax1 = subplots()
