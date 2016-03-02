@@ -4,6 +4,7 @@ import urllib2 # python 2
 import scipy as sc
 import numpy as np
 from matplotlib.pyplot import *
+from scipy import stats as st
 """General stock array structure is [open, high, low, close, volume] 
    Script takes 250 days worth of stock data per stock, from Google, 
    and calculates the ADL.
@@ -12,7 +13,7 @@ from matplotlib.pyplot import *
    Date:  2015-12-16
 """
 
-# Simple moving Average
+# Simple Moving Average, helper function
 def sma(daily_data, time_frame):
 	"""Calculates the X-day simple moving average, based on:
 	   evolving sum(a[:time_frame]) / time_frame
@@ -69,7 +70,7 @@ def ema(daily_data, time_frame):
 		emas = np.append(emas, ema_element)
 
 	# Remove first ema, for plotting purposes (I think we need this)
-	emas = emas[1:]
+	# emas = emas[1:]
 	return emas
 
 # Daily Money Flow Multiplier (MFM)
@@ -254,8 +255,9 @@ for tl in ax2.get_yticklabels():
 show()
 
 # r-squared of ADL and poly fit of ADL
-adl_lingress_slope, adl_lingress_intercept, adl_lingress_rvalue, adl_lingress_pvalue, adl_lingress_stderr = st.lingress(daily_adls, ys_adls)
-print("ADL r^2: ", adl_lingress_rvalue**2.)
+adl_lingress_slope, adl_lingress_intercept, adl_lingress_rvalue, adl_lingress_pvalue, adl_lingress_stderr = st.linregress(daily_adls, ys_adls)
+r_squared = adl_lingress_rvalue**2.
+print("ADL r^2: %f" %r_squared)
 
 
 """
