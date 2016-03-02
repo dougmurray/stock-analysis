@@ -14,62 +14,51 @@ from scipy import stats as st
 """
 
 # Simple Moving Average, helper function
-def sma(daily_data, time_frame):
+def sma(cummulated_data, time_frame):
 	"""Calculates the X-day simple moving average, based on:
 	   evolving sum(a[:time_frame]) / time_frame
 
 	   Args:
-	      daily_data: 2D array with [open, high, low, close, volume] per row
+	      cummulated_data: 1D array with close values
 	      time_frame: number of days sma average is based on, usually 12, 26, or 9
 	   Returns:
-	      1D array with [sma] values
+	      smas: 1D array with sma values
 	"""
 	smas = np.array([])
-	daily_closes = np.array([])
-	for i, data in enumerate(daily_data):
-		"""Just the daily closes (data[3] element) in array"""
-		daily_close = data[3]
-		daily_closes = np.append(daily_closes, daily_close)
-
-	for i, element in enumerate(daily_closes):
-		if (i + time_frame) >= len(daily_closes):
+	for i, element in enumerate(cummulated_data):
+		if (i + time_frame) >= len(cummulated_data):
 			break
 		else:
 			# sma = sum(time_frame packet) / time_frame 
-			sma_element = (sum(daily_closes[i:time_frame+i]) / time_frame)
+			sma_element = (sum(cummulated_data[i:time_frame+i]) / time_frame)
 			smas = np.append(smas, sma_element)
 
 	return smas
 
 # Exponential Moving Average
-def ema(daily_data, time_frame):
+def ema(data_set, time_frame):
 	"""Calculates the X-day exponential moving average, based on:
 	   inital X-day sma * multiplier= inital ema
 	   (close - ema(previous_close)) * multiplier + ema(previous_close)
 
 	   Args:
-	      daily_data: 2D array with [open, high, low, close, volume] per row
+	      data_set: 1D array with close values
 	      time_frame: number of days ema average is based on, usually 12, 26 or 9
 	   Returns:
-	      1D array with [ema] values
+	      emas: 1D array with ema values
 	"""
-	daily_closes = np.array([])
-	for i, data in enumerate(daily_data):
-		"""Just the daily closes (data[3] element) in array"""
-		daily_close = data[3]
-		daily_closes = np.append(daily_closes, daily_close)
-
 	# Multiplier can also be set as a constant decimal percentage (0.18 = 18%)
 	multiplier = 2. / (time_frame + 1.)
 	# The inital ema is based on the first sma: close - inital_sma * multiplier + inital_sma
-	smas = sma(daily_data, time_frame)
-	emas = np.array([daily_closes[0] - smas[0] * multiplier + smas[0]])
-	for i, element in enumerate(daily_closes):
+	first_sma = sma(data_set, time_frame)
+	emas = np.array([data_set[0] - first_sma[0] * multiplier + first_sma[0]])
+	
+	for i, element in enumerate(data_set):
 		# ema = close - previous_ema * multiplier + previous_ema
 		ema_element = element - emas[i] * multiplier + emas[i]
 		emas = np.append(emas, ema_element)
 
-	# Remove first ema, for plotting purposes (I think we need this)
+	# Remove first ema, for plotting purposes
 	emas = emas[1:]
 	return emas
 
@@ -83,10 +72,13 @@ def mfm(daily_data):
 	   Returns:
 	      1D array with [mfm] values
 	"""
+	closes = daily_data[:,3]
+	lows = daily_data[:,2]
+	highs = daily_data[:,1]
 	mfms = np.array([])
 	for i, data in enumerate(daily_data):
 		""" ((close - low) - (high - close)) / (high - low)"""
-		mfm_value = ((data[3] - data[2]) - (data[1] - data[3])) / (data[1] - data[2])
+		mfm_value = ((closes[i] - lows[i]) - (highs[i] - closes[i])) / (highs[i] - lows[i])
 		mfms = np.append(mfms, mfm_value)
 		
 	return mfms
@@ -98,13 +90,15 @@ def mfv(mfm_data, daily_data):
 	
 	   Args: 
 	      mfm_data: 1D array with [mfm] values
+	      daily_data: 2D array with [open, high, low, close, volume] per row
 	   Returns:
 	      1D array with [mfv] values
 	"""
+	volumes = daily_data[:,4] #daily_data[i][4]
 	mfv = np.array([])
 	for i, data in enumerate(mfm_data):
 		""" mfm * volume"""
-		mfv_value = data * daily_data[i][4]
+		mfv_value = data * volumes[i]
 		mfv = np.append(mfv, mfv_value)
 	return mfv
 
@@ -163,6 +157,11 @@ data = np.delete(data, 0 , 1)
 data = np.flipud(data)
 print(data)
 
+# Just the Closes in array form
+daily_closes = data[:,3]
+print(daily_closes)
+print(data)
+
 # Daily MFM
 daily_mfms = mfm(data)
 print(daily_mfms)
@@ -182,8 +181,8 @@ adls_x = np.arange(0, len(daily_adls))
 # print(adls_x)
 
 # EMA
-ema_12_day = ema(data, 12)
-ema_26_day = ema(data, 26)
+ema_12_day = ema(daily_closes, 12)
+ema_26_day = ema(daily_closes, 26)
 
 # Plot stock price
 # Polynomial fit
@@ -265,8 +264,13 @@ ax1.set_ylabel('Stock Price (USD)', color='b')
 for tl in ax1.get_yticklabels():
 	tl.set_color('b')
 
+print(len(ema_12_day))
+print(len(data_x))
+print(data[:,3])
+print(ema_12_day)
+
 ax2 = ax1.twinx()
-ax2.plot(data_x, stock_emas, 'r-') # Note x axis is the same
+ax2.plot(data_x, ema_12_day, 'r-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'r-') # Note x axis is the same (poly fit)
 ax2.set_ylabel('Exponential Moving Average (EMA)', color='r')
 # Set y axis tick labels to proper graph color
