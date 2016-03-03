@@ -260,11 +260,6 @@ ax1.set_ylabel('Stock Price (USD)', color='b')
 for tl in ax1.get_yticklabels():
 	tl.set_color('b')
 
-print(len(ema_12_day))
-print(len(data_x))
-print(data[:,3])
-print(ema_12_day)
-
 ax2 = ax1.twinx()
 ax2.plot(data_x, ema_12_day, 'r-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'r-') # Note x axis is the same (poly fit)
