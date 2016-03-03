@@ -68,7 +68,7 @@ def macd(raw_data):
 	   (12-day EMA - 26-day EMA)
 
 	   Args:
-	      closes: 2D array with [open, high, low, close, volume] per row
+	      raw_data: 2D array with [open, high, low, close, volume] per row
 	   Returns:
 	      macds: 1D array with macds
 	"""
@@ -291,11 +291,35 @@ for tl in ax2.get_yticklabels():
 	tl.set_color('r')
 show()
 
+# Plotting of MACD data
+# First MACD line
+fig, ax1 = subplots()
+# ax1.plot(data_x, data[:,3], 'b-')
+ax1.plot(data_x, macd, 'b-') # Poly fit
+ax1.set_xlabel('Days')
+ax1.set_ylabel('Moving Average C/D Oscillator (MACD)', color='b')
+# Set y axis tick labels to proper graph color
+for tl in ax1.get_yticklabels():
+	tl.set_color('b')
+
+# Then Signal Line
+ax2 = ax1.twinx()
+ax2.plot(data_x, signal_line, 'r-') # Note x axis is the same
+# ax2.plot(data_x, signal_line, 'r-') # Note x axis is the same (poly fit)
+ax2.set_ylabel('Exponential Moving Average (EMA)', color='r')
+# Set y axis tick labels to proper graph color
+for tl in ax2.get_yticklabels():
+	tl.set_color('r')
+
+# Finally include MACD Histogram
+ax3 = ax2.twinx()
+ax3.plot(data_x, macd_histogram, 'g-')
+show()
+
 # r-squared of ADL and poly fit of ADL
 adl_lingress_slope, adl_lingress_intercept, adl_lingress_rvalue, adl_lingress_pvalue, adl_lingress_stderr = st.linregress(daily_adls, ys_adls)
 r_squared = adl_lingress_rvalue**2.
 print("ADL r^2: %f" %r_squared)
-
 
 """
 # Exponential distribution section
