@@ -62,6 +62,23 @@ def ema(data_set, time_frame):
 	emas = emas[1:]
 	return emas
 
+# Moving Average Convergence/Divergence Oscillator (MACD)
+def macd(raw_data):
+	"""Calculates MACD, based on:
+	   (12-day EMA - 26-day EMA)
+
+	   Args:
+	      closes: 2D array with [open, high, low, close, volume] per row
+	   Returns:
+	      macds: 1D array with macds
+	"""
+	macds = np.array([])
+	only_closes = raw_data[:,3]
+	ema_12_day = ema(only_closes, 12)
+	ema_26_day = ema(only_closes, 26)
+	macds = ema_12_day - ema_26_day
+	return macds
+
 # Daily Money Flow Multiplier (MFM)
 def mfm(daily_data):
 	"""Finds daily money flow multiplier (MFM), represented by:
@@ -70,7 +87,7 @@ def mfm(daily_data):
 	   Args:
 	      daily_data: 2D array with [open, high, low, close, volume] per row
 	   Returns:
-	      1D array with [mfm] values
+	      mfms: 1D array with [mfm] values
 	"""
 	closes = daily_data[:,3]
 	lows = daily_data[:,2]
@@ -178,7 +195,12 @@ adls_x = np.arange(0, len(daily_adls))
 # EMA
 daily_closes = data[:,3]
 ema_12_day = ema(daily_closes, 12)
-ema_26_day = ema(daily_closes, 26)
+# ema_26_day = ema(daily_closes, 26)
+
+# MACD
+macd = macd(data)
+signal_line = ema(macd,9)
+macd_histogram = macd - signal_line
 
 # Plot stock price
 # Polynomial fit
