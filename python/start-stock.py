@@ -119,7 +119,6 @@ def mfv(mfm_data, daily_data):
 		mfv = np.append(mfv, mfv_value)
 	return mfv
 
-
 # Daily Accumulation Distribution Line (ADL)
 def adl(mfv_data):
 	"""Finds daily accumulation distribution line (adl), represented by:
@@ -135,27 +134,6 @@ def adl(mfv_data):
 		adl_value = data + (mfv_data[i-1])
 		adl = np.append(adl, adl_value)
 	return adl
-
-# Exponenital distribution
-def exponential_dist(daily_data, time_interval):
-	"""Calculates the exponential distribution.
-
-	   Args:
-	      daily_data: 2D stock array with [open, high, low, close, volume]
-	      per row
-	      time_interval: float representing how many days for interval
-	   Returns:
-	      exponential_distro: exponential dist array
-	"""
-	time_range = (250. - time_interval) # 250 is the final time in days
-	average_rate = (daily_data[250][3] - daily_data[time_range][3]) / time_interval
-
-	exponential_distro = np.array([])
-	for i in range(int(time_interval)):
-		expo_value = average_rate * np.exp(-average_rate * (i+1))
-		exponential_distro = np.append(exponential_distro, expo_value)
-	# print(average_rate)
-	return exponential_distro
 
 # Gather stock data from online
 # url = 'http://www.google.com/finance/historical?output=csv&q=mu'
@@ -320,37 +298,6 @@ show()
 adl_lingress_slope, adl_lingress_intercept, adl_lingress_rvalue, adl_lingress_pvalue, adl_lingress_stderr = st.linregress(daily_adls, ys_adls)
 r_squared = adl_lingress_rvalue**2.
 print("ADL r^2: %f" %r_squared)
-
-"""
-# Exponential distribution section
-time_range = 250.
-exp_function = exponential_dist(data, time_range)
-print(exp_function)
-plot(range(int(time_range)), exp_function, 'o')
-ylabel('Exponential Probability')
-xlabel('Days')
-show()
-
-# Overlay stock price graph with Exponential graph
-# Plot stock price with poly fit
-fig, ax1 = subplots()
-ax1.plot(data_x[1:], data[1:,3], 'b-')
-# ax1.plot(data_x, ys_data, 'b-') # Poly fit
-ax1.set_xlabel('Days')
-ax1.set_ylabel('Stock Price (USD)', color='b')
-# Set y axis tick labels to proper graph color
-for tl in ax1.get_yticklabels():
-	tl.set_color('b')
-
-# Plot Exponential
-ax2 = ax1.twinx()
-ax2.plot(data_x[1:], exp_function, 'g-') # Note x axis is the same
-ax2.set_ylabel('Exponential Probability', color='g')
-# Set y axis tick labels to proper graph color
-for tl in ax2.get_yticklabels():
-	tl.set_color('g')
-show()
-"""
 
 # TODO: Blessings terminal based version
 # is it possible to do graphs in terminal with blessings?!
