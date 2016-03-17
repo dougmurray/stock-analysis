@@ -1,6 +1,6 @@
 # main.py
 #!/usr/bin/env python27
-from analysis import startstock
+#from analysis import startstock
 """Analysis of stocks using various methods, including ADL, MACD, etc.
 
    User inputs stock symbol and desired analysis method(s).  
