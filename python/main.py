@@ -1,6 +1,7 @@
 # main.py
 #!/usr/bin/env python27
-#from analysis import startstock
+from frontend.runner import *
+# from analysis import startstock
 """Analysis of stocks using various methods, including ADL, MACD, etc.
 
    User inputs stock symbol and desired analysis method(s).  
@@ -20,9 +21,27 @@ print('6 JD.com (JD)')
 print('7 Qualcomm (QCOM)')
 print('8 Taiwan Semiconductor (TSM)')
 
-picked_stock = raw_input("Pick stock: ")
-print "you entered", picked_stock
+picked_stock = int(raw_input("Pick stock: "))
+print("you entered", picked_stock)
 
-
+if picked_stock == 1:
+	stock = 'mchp'
+elif picked_stock == 2:
+	stock = 'hsy'
+elif picked_stock == 3:
+	stock = 'mu'
+elif picked_stock == 4:
+	stock = 'nke'
+elif picked_stock == 5:
+	stock = 'intc'
+elif picked_stock == 6:
+	stock = 'jd'
+elif picked_stock == 7:
+	stock = 'gcom'
+elif picked_stock == 8:
+	stock = 'tsm'
+else:
+	stock = ' '
+	print("Please type number representing stock")
 
 # Consider using blessings for fancy text?

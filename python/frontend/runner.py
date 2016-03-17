@@ -7,7 +7,8 @@ import scipy as sc
 import numpy as np
 from matplotlib.pyplot import *
 from scipy import stats as st
-from analysis import startstock
+from analysis.startstock import *
+from main import stock
 """This is a tester
    
    Hi
@@ -19,8 +20,10 @@ from analysis import startstock
 # response = urllib2.urlopen(url) # python 2
 # data = sc.genfromtxt(response, delimiter=',')
 
+stock_pick = stock + '.csv'
+
 # Or Local stock gather data for when offline
-with open('mu.csv', 'rb') as csvfile:
+with open(stock_pick, 'rb') as csvfile:
 	data = sc.genfromtxt(csvfile, delimiter=',')
 
 # Remove NAN data in array (first row and then first column),
