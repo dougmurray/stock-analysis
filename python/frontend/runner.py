@@ -1,16 +1,16 @@
 # runner.py
 #!usr/bin/env python27
 import csv
-# from urllib.request import urlopen # stupid python 3 
+# from urllib.request import urlopen # stupid python 3
 import urllib2 # python 2
 import scipy as sc
 import numpy as np
 from matplotlib.pyplot import *
 from scipy import stats as st
 from analysis.startstock import *
-from main import stock
+from main import *
 """This is a tester
-   
+
    Hi
 """
 
@@ -19,7 +19,7 @@ from main import stock
 # response = urlopen(url) # stupid python 3
 # response = urllib2.urlopen(url) # python 2
 # data = sc.genfromtxt(response, delimiter=',')
-
+stock = mainFunction()
 stock_pick = stock + '.csv'
 
 # Or Local stock gather data for when offline
@@ -28,7 +28,7 @@ with open(stock_pick, 'rb') as csvfile:
 
 # Remove NAN data in array (first row and then first column),
 # flip so most recent (which is at the front) is placed at end
-data = np.delete(data, 0 , 0) 
+data = np.delete(data, 0 , 0)
 data = np.delete(data, 0 , 1)
 data = np.flipud(data)
 print(data)
