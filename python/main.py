@@ -7,7 +7,7 @@
    Author:  Douglass Murray
    Date:  2016-03-16
 """
-def mainFunction():
+def main_terminal():
     """Runs general Terminal version of script.
     """
     print("Welcome to Stock Analysis Program")

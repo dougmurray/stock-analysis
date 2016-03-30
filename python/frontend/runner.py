@@ -9,18 +9,23 @@ from matplotlib.pyplot import *
 from scipy import stats as st
 from analysis.startstock import *
 from main import *
-"""This is a tester
+"""This is the true 'main' script, as it runs all the choices made in main.py.
+   The main.py is really the GUI script, where choices are selected by user.
 
-   Hi
+   Args:
+      stock: string containing lettered stock choice.  Imported from main.py.
+
+   Author: Douglass Murray
+   Date: 2016-03-30
 """
+stock = main_terminal()
+stock_pick = stock + '.csv'
 
 # Gather stock data from online
-# url = 'http://www.google.com/finance/historical?output=csv&q=mu'
+# url = 'http://www.google.com/finance/historical?output=csv&q=' + stock
 # response = urlopen(url) # stupid python 3
 # response = urllib2.urlopen(url) # python 2
 # data = sc.genfromtxt(response, delimiter=',')
-stock = mainFunction()
-stock_pick = stock + '.csv'
 
 # Or Local stock gather data for when offline
 with open(stock_pick, 'rb') as csvfile:
