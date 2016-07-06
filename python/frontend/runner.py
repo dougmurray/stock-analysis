@@ -22,14 +22,14 @@ stock = main_terminal()
 stock_pick = stock + '.csv'
 
 # Gather stock data from online
-# url = 'http://www.google.com/finance/historical?output=csv&q=' + stock
+url = 'http://www.google.com/finance/historical?output=csv&q=' + stock
 # response = urlopen(url) # stupid python 3
-# response = urllib2.urlopen(url) # python 2
-# data = sc.genfromtxt(response, delimiter=',')
+response = urllib2.urlopen(url) # python 2
+data = sc.genfromtxt(response, delimiter=',')
 
 # Or Local stock gather data for when offline
-with open(stock_pick, 'rb') as csvfile:
-	data = sc.genfromtxt(csvfile, delimiter=',')
+# with open(stock_pick, 'rb') as csvfile:
+	# data = sc.genfromtxt(csvfile, delimiter=',')
 
 # Remove NAN data in array (first row and then first column),
 # flip so most recent (which is at the front) is placed at end
