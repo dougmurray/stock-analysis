@@ -20,6 +20,7 @@ def main_terminal():
     print('6 JD.com (JD)')
     print('7 Qualcomm (QCOM)')
     print('8 Taiwan Semiconductor (TSM)')
+    print('9 Aerojet Rocketdyne (AJRD)')
 
     picked_stock = int(raw_input("Pick stock: "))
     print("you entered", picked_stock)
@@ -37,9 +38,11 @@ def main_terminal():
     elif picked_stock == 6:
     	stock = 'jd'
     elif picked_stock == 7:
-    	stock = 'gcom'
+    	stock = 'qcom'
     elif picked_stock == 8:
     	stock = 'tsm'
+    elif picked_stock == 9:
+        stock = 'ajrd'
     else:
     	stock = ' '
     	print("Please type number representing stock")
