@@ -92,7 +92,7 @@ ax2.plot(mfms_x, daily_mfms, 'o')
 # plot(x, ys)
 ylabel('Money Flow Multiplier (MFM)')
 xlabel('Days')
-title(stock)
+title(stock + ' MFM')
 # xlim(-10, 10)
 ylim(-1.25, 1.25)
 # show()
@@ -110,7 +110,7 @@ ax3.plot(mfvs_x, daily_mfvs, 'o')
 ax3.plot(mfvs_x, ys_mfv)
 ylabel('Money Flow Volume (MFV)')
 xlabel('Days')
-title(stock)
+title(stock + ' MFV')
 # show()
 
 # Plot graph of daily ADLs
@@ -126,7 +126,7 @@ ax4.plot(adls_x, daily_adls, 'o')
 ax4.plot(adls_x, ys_adls)
 ylabel('Accumulation Distribution Line (ADL)')
 xlabel('Days')
-title(stock)
+title(stock + ' ADL')
 # show()
 
 # Overlay stock price graph with ADL graph
@@ -137,7 +137,7 @@ ax5.plot(data_x, data[:,3], 'b-')
 # ax1.plot(data_x, ys_data, 'b-') # Poly fit
 ax5.set_xlabel('Days')
 ax5.set_ylabel('Stock Price (USD)', color='b')
-title(stock)
+title(stock + ' ADL Overlay')
 # Set y axis tick labels to proper graph color
 for tl in ax5.get_yticklabels():
 	tl.set_color('b')
@@ -147,7 +147,7 @@ ax6 = ax5.twinx()
 ax6.plot(data_x, daily_adls, 'g-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'g-') # Note x axis is the same (poly fit)
 ax6.set_ylabel('Accumulation Distribution Line (ADL)', color='g')
-title(stock)
+# title(stock)
 # Set y axis tick labels to proper graph color
 for tl in ax6.get_yticklabels():
 	tl.set_color('g')
@@ -160,7 +160,7 @@ ax7 = fig.add_subplot(3,3,6)
 ax7.plot(data_x, ys_data, 'b-') # Poly fit
 ax7.set_xlabel('Days')
 ax7.set_ylabel('Stock Price (USD)', color='b')
-title(stock)
+title(stock + ' EMA Overlay')
 # Set y axis tick labels to proper graph color
 for tl in ax7.get_yticklabels():
 	tl.set_color('b')
@@ -169,7 +169,7 @@ ax8 = ax7.twinx()
 ax8.plot(data_x, ema_12_day, 'r-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'r-') # Note x axis is the same (poly fit)
 ax8.set_ylabel('Exponential Moving Average (EMA)', color='r')
-title(stock)
+# title(stock)
 # Set y axis tick labels to proper graph color
 for tl in ax8.get_yticklabels():
 	tl.set_color('r')
@@ -183,7 +183,7 @@ ax9 = fig.add_subplot(3,3,7)
 ax9.plot(data_x, macd, 'b-') # Poly fit
 ax9.set_xlabel('Days')
 ax9.set_ylabel('Moving Average C/D Oscillator (MACD)', color='b')
-title(stock)
+title(stock + 'MACD')
 # Set y axis tick labels to proper graph color
 for tl in ax9.get_yticklabels():
 	tl.set_color('b')
@@ -193,7 +193,7 @@ ax10 = ax9.twinx()
 ax10.plot(data_x, signal_line, 'r-') # Note x axis is the same
 # ax2.plot(data_x, signal_line, 'r-') # Note x axis is the same (poly fit)
 ax10.set_ylabel('Exponential Moving Average (EMA)', color='r')
-title(stock)
+# title(stock)
 # Set y axis tick labels to proper graph color
 for tl in ax10.get_yticklabels():
 	tl.set_color('r')
