@@ -66,128 +66,141 @@ macd = macd(data)
 signal_line = ema(macd,9)
 macd_histogram = macd - signal_line
 
+# Plotting all in one figure
+fig = figure()
+
 # Plot stock price
 # Polynomial fit
 data_x = np.arange(0, data.shape[0])
 coefficients_data = np.polyfit(data_x, data[:,3] , 12)
 polynomial_data = np.poly1d(coefficients_data)
 ys_data = polynomial_data(data_x)
-plot(data_x, data[:,3], 'o')
-plot(data_x, ys_data)
-ylabel('Stock Price (USD)')
-xlabel('Days')
-title(stock)
-show()
 print(coefficients_data)
 print(polynomial_data)
 
+ax1 = fig.add_subplot(3,3,1)
+ax1.plot(data_x, data[:,3], 'o')
+ax1.plot(data_x, ys_data)
+ylabel('Stock Price (USD)')
+xlabel('Days')
+title(stock)
+# show()
+
 # Plot graph of daily MFMs
-plot(mfms_x, daily_mfms, 'o')
+ax2 = fig.add_subplot(3,3,2)
+ax2.plot(mfms_x, daily_mfms, 'o')
 # plot(x, ys)
 ylabel('Money Flow Multiplier (MFM)')
 xlabel('Days')
 title(stock)
 # xlim(-10, 10)
 ylim(-1.25, 1.25)
-show()
+# show()
 
 # Plot graph of daily MFVs
 # Polynomial fit
 coefficients_mfv = np.polyfit(mfvs_x, daily_mfvs, 6)
 polynomial_mfv = np.poly1d(coefficients_mfv)
 ys_mfv = polynomial_mfv(mfvs_x)
-plot(mfvs_x, daily_mfvs, 'o')
-plot(mfvs_x, ys_mfv)
+print(coefficients_mfv)
+print(polynomial_mfv)
+
+ax3 = fig.add_subplot(3,3,3)
+ax3.plot(mfvs_x, daily_mfvs, 'o')
+ax3.plot(mfvs_x, ys_mfv)
 ylabel('Money Flow Volume (MFV)')
 xlabel('Days')
 title(stock)
-show()
-print(coefficients_mfv)
-print(polynomial_mfv)
+# show()
 
 # Plot graph of daily ADLs
 # Polynomial fit
 coefficients_adl = np.polyfit(adls_x, daily_adls, 12)
 polynomial_adl = np.poly1d(coefficients_adl)
 ys_adls = polynomial_adl(adls_x)
-plot(adls_x, daily_adls, 'o')
-plot(adls_x, ys_adls)
-ylabel('Accumulation Distribution Line (ADL)')
-xlabel('Days')
-title(stock)
-show()
 print(coefficients_adl)
 print(polynomial_adl)
 
+ax4 = fig.add_subplot(3,3,4)
+ax4.plot(adls_x, daily_adls, 'o')
+ax4.plot(adls_x, ys_adls)
+ylabel('Accumulation Distribution Line (ADL)')
+xlabel('Days')
+title(stock)
+# show()
+
 # Overlay stock price graph with ADL graph
 # First plot stock price with poly fit
-fig, ax1 = subplots()
-ax1.plot(data_x, data[:,3], 'b-')
+# fig, ax1 = subplots()
+ax5 = fig.add_subplot(3,3,5)
+ax5.plot(data_x, data[:,3], 'b-')
 # ax1.plot(data_x, ys_data, 'b-') # Poly fit
-ax1.set_xlabel('Days')
-ax1.set_ylabel('Stock Price (USD)', color='b')
+ax5.set_xlabel('Days')
+ax5.set_ylabel('Stock Price (USD)', color='b')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax1.get_yticklabels():
+for tl in ax5.get_yticklabels():
 	tl.set_color('b')
 
 # Second plot ADL with poly fit
-ax2 = ax1.twinx()
-ax2.plot(data_x, daily_adls, 'g-') # Note x axis is the same
+ax6 = ax5.twinx()
+ax6.plot(data_x, daily_adls, 'g-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'g-') # Note x axis is the same (poly fit)
-ax2.set_ylabel('Accumulation Distribution Line (ADL)', color='g')
+ax6.set_ylabel('Accumulation Distribution Line (ADL)', color='g')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax2.get_yticklabels():
+for tl in ax6.get_yticklabels():
 	tl.set_color('g')
-show()
+# show()
 
 # Plotting Stock price with EMA overlay
-fig, ax1 = subplots()
+ax7 = fig.add_subplot(3,3,6)
+# fig, ax1 = subplots()
 # ax1.plot(data_x, data[:,3], 'b-')
-ax1.plot(data_x, ys_data, 'b-') # Poly fit
-ax1.set_xlabel('Days')
-ax1.set_ylabel('Stock Price (USD)', color='b')
+ax7.plot(data_x, ys_data, 'b-') # Poly fit
+ax7.set_xlabel('Days')
+ax7.set_ylabel('Stock Price (USD)', color='b')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax1.get_yticklabels():
+for tl in ax7.get_yticklabels():
 	tl.set_color('b')
 
-ax2 = ax1.twinx()
-ax2.plot(data_x, ema_12_day, 'r-') # Note x axis is the same
+ax8 = ax7.twinx()
+ax8.plot(data_x, ema_12_day, 'r-') # Note x axis is the same
 # ax2.plot(data_x, ys_adls, 'r-') # Note x axis is the same (poly fit)
-ax2.set_ylabel('Exponential Moving Average (EMA)', color='r')
+ax8.set_ylabel('Exponential Moving Average (EMA)', color='r')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax2.get_yticklabels():
+for tl in ax8.get_yticklabels():
 	tl.set_color('r')
-show()
+# show()
 
 # Plotting of MACD data
 # First MACD line
-fig, ax1 = subplots()
+ax9 = fig.add_subplot(3,3,7)
+# fig, ax1 = subplots()
 # ax1.plot(data_x, data[:,3], 'b-')
-ax1.plot(data_x, macd, 'b-') # Poly fit
-ax1.set_xlabel('Days')
-ax1.set_ylabel('Moving Average C/D Oscillator (MACD)', color='b')
+ax9.plot(data_x, macd, 'b-') # Poly fit
+ax9.set_xlabel('Days')
+ax9.set_ylabel('Moving Average C/D Oscillator (MACD)', color='b')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax1.get_yticklabels():
+for tl in ax9.get_yticklabels():
 	tl.set_color('b')
 
 # Then Signal Line
-ax2 = ax1.twinx()
-ax2.plot(data_x, signal_line, 'r-') # Note x axis is the same
+ax10 = ax9.twinx()
+ax10.plot(data_x, signal_line, 'r-') # Note x axis is the same
 # ax2.plot(data_x, signal_line, 'r-') # Note x axis is the same (poly fit)
-ax2.set_ylabel('Exponential Moving Average (EMA)', color='r')
+ax10.set_ylabel('Exponential Moving Average (EMA)', color='r')
 title(stock)
 # Set y axis tick labels to proper graph color
-for tl in ax2.get_yticklabels():
+for tl in ax10.get_yticklabels():
 	tl.set_color('r')
 
 # Finally include MACD Histogram
-ax3 = ax2.twinx()
-ax3.plot(data_x, macd_histogram, 'g-')
+# ax3 = ax2.twinx()
+# ax3.plot(data_x, macd_histogram, 'g-')
 show()
 
 # r-squared of ADL and poly fit of ADL
