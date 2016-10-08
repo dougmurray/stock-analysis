@@ -21,6 +21,14 @@ def main_terminal():
     print('7 Qualcomm (QCOM)')
     print('8 Taiwan Semiconductor (TSM)')
     print('9 Aerojet Rocketdyne (AJRD)')
+    print('10 Johnson & Johnson (JNJ)')
+    print('11 MGIC Investment Corp (MTG)')
+    print('12 Adamas Pharmaceuticals Inc. (ADMS)')
+    print('13 Kraft Heinz (KHC)')
+    print('14 ARM Holdings (ARMH)')
+    print('15 Wells Fargo (WFC)')
+    print('16 Gilead Sciences Inc (GILD)')
+    print('17 Mattel Inc (MAT)')
 
     picked_stock = int(raw_input("Pick stock: "))
     print("you entered", picked_stock)
@@ -43,6 +51,22 @@ def main_terminal():
     	stock = 'tsm'
     elif picked_stock == 9:
         stock = 'ajrd'
+    elif picked_stock == 10:
+        stock = 'jnj'
+    elif picked_stock == 11:
+        stock = 'mtg'
+    elif picked_stock == 12:
+        stock = 'adms'
+    elif picked_stock == 13:
+        stock = 'khc'
+    elif picked_stock == 14:
+        stock = 'armh'
+    elif picked_stock == 15:
+        stock = 'wfc'
+    elif picked_stock == 16:
+        stock = 'gild'
+    elif picked_stock == 17:
+        stock = 'mat'
     else:
     	stock = ' '
     	print("Please type number representing stock")
