@@ -19,10 +19,11 @@ from main import *
    Date: 2016-03-30
 """
 stock = main_terminal()
-stock_pick = stock + '.csv'
+stock_pick = "%s.csv" % stock
 
 # Gather stock data from online
-url = 'http://www.google.com/finance/historical?output=csv&q=' + stock
+urlbegin = "http://www.google.com/finance/historical?output=csv&q="
+url = urlbegin + stock
 # response = urlopen(url) # stupid python 3
 response = urllib2.urlopen(url) # python 2
 data = sc.genfromtxt(response, delimiter=',')

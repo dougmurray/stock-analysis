@@ -30,9 +30,10 @@ def main_terminal():
     print('16 Gilead Sciences Inc (GILD)')
     print('17 Mattel Inc (MAT)')
 
-    picked_stock = int(raw_input("Pick stock: "))
+    picked_stock = str(raw_input("Pick stock: "))
     print("you entered", picked_stock)
-
+    return picked_stock
+    """
     if picked_stock == 1:
     	stock = 'mchp'
     elif picked_stock == 2:
@@ -70,7 +71,7 @@ def main_terminal():
     else:
     	stock = ' '
     	print("Please type number representing stock")
-    return stock
+    """
 
 if __name__ == '__main__':
     from frontend.runner import *
